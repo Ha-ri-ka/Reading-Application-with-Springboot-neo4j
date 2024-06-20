@@ -7,7 +7,7 @@ import reading.readingtracker.book.Book;
 
 import java.util.Set;
 
-@Node
+@Node("PERSON")
 public record Person(
         @Id Long id,
         String name,

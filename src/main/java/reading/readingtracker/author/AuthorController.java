@@ -1,8 +1,10 @@
 package reading.readingtracker.author;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -28,9 +30,21 @@ public class AuthorController {
     }
 
     //create author
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/create")
+    public void create(@RequestBody Author author) {
+        authorService.create(author);
+    }
 
 
-    //update author details
+    //update author name
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/update/{name}")
+    public void update(@PathVariable String name, @RequestBody Map<String, String> updateRequest)
+    {
+        String newName = updateRequest.get("newName");
+        authorService.update(name, newName);
+    }
 
     //delete by name
     @DeleteMapping("/deleteAuthor")
@@ -45,6 +59,4 @@ public class AuthorController {
     {
         authorService.deleteRelationships(name);
     }
-
-
 }

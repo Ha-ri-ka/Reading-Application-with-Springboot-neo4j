@@ -20,9 +20,12 @@ public interface AuthorRepo extends Neo4jRepository <Author,Long>
     Optional<Author> findByName(String name);
 
     //create author
-
+    @Query("CREATE (a:AUTHOR {id: $id,name: $name})")
+    void save(Integer id,String name);
 
     //update author details
+    @Query("MATCH (a:AUTHOR {name: $name}) SET a.name = $newName")
+    void update(String name,String newName);
 
     //delete author by name
     @Query("MATCH (n:AUTHOR {name: $name}) DETACH DELETE n")
