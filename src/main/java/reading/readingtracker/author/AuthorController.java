@@ -2,6 +2,7 @@ package reading.readingtracker.author;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import reading.readingtracker.relationships.WroteRelationship;
 
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,14 @@ public class AuthorController {
     @PostMapping("/create")
     public void create(@RequestBody Author author) {
         authorService.create(author);
+    }
+
+    //create relationship
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/create-relationship")
+    public void createRelationship(@RequestBody WroteRelationship relationship)
+    {
+        authorService.createRelationship(relationship.authorName(),relationship.bookName());
     }
 
 

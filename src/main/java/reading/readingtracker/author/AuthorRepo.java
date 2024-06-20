@@ -11,6 +11,15 @@ import java.util.Optional;
 @Repository
 public interface AuthorRepo extends Neo4jRepository <Author,Long>
 {
+
+    //create author
+    @Query("CREATE (a:AUTHOR {id: $id,name: $name})")
+    void save(Integer id,String name);
+
+    //create relationship
+    @Query("MATCH (a:AUTHOR {name: $authName}), (b:BOOK {name: $bookName}) CREATE (a)-[:WROTE]->(b)")
+    void createRelationship(String authName,String bookName);
+
     //return all authors
     @Query("MATCH (n:AUTHOR) RETURN n")
     List<Author> findAll();
@@ -19,9 +28,6 @@ public interface AuthorRepo extends Neo4jRepository <Author,Long>
     @Query("MATCH (auth:AUTHOR) WHERE auth.name = $name RETURN auth")
     Optional<Author> findByName(String name);
 
-    //create author
-    @Query("CREATE (a:AUTHOR {id: $id,name: $name})")
-    void save(Integer id,String name);
 
     //update author details
     @Query("MATCH (a:AUTHOR {name: $name}) SET a.name = $newName")

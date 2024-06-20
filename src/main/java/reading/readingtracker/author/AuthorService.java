@@ -37,6 +37,12 @@ public class AuthorService {
         authorRepo.save(author);
     }
 
+    //create relationship
+    public void createRelationship(String authName,String bookName)
+    {
+        authorRepo.createRelationship(authName,bookName);
+    }
+
     //update author details
     public void update(String name,String newName)
     {
